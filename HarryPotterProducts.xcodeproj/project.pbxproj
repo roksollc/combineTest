@@ -23,7 +23,6 @@
 		4179661C26BA5E450024D364 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4179661B26BA5E450024D364 /* ImageCache.swift */; };
 		4179661E26BA5EB50024D364 /* ImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4179661D26BA5EB50024D364 /* ImageFetcher.swift */; };
 		4179662026BA5F150024D364 /* ImageFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4179661F26BA5F150024D364 /* ImageFetcherTests.swift */; };
-		4179662326BA652F0024D364 /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = 4179662226BA652F0024D364 /* Mocker */; };
 		41B597B226BB570C00C732A8 /* ProductDataProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B597B126BB570C00C732A8 /* ProductDataProviderTests.swift */; };
 		41BEAE9C26BC8625009B0D1A /* ProductListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BEAE9B26BC8625009B0D1A /* ProductListViewModelTests.swift */; };
 		41BEAE9E26BC8AB0009B0D1A /* ProductDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BEAE9D26BC8AB0009B0D1A /* ProductDetailViewModelTests.swift */; };
@@ -34,6 +33,7 @@
 		41E000F326BB0A8D0058ED18 /* ProductListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E000F226BB0A8D0058ED18 /* ProductListViewModel.swift */; };
 		41E000F526BB0AB50058ED18 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E000F426BB0AB50058ED18 /* ProductListView.swift */; };
 		41E000F726BB0ADA0058ED18 /* ProductCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E000F626BB0ADA0058ED18 /* ProductCellView.swift */; };
+		9483C31126BCA8DC00B85B63 /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = 9483C31026BCA8DC00B85B63 /* Mocker */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,7 +84,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				412C081226B9FF3A00037FBF /* SnapKit in Frameworks */,
-				4179662326BA652F0024D364 /* Mocker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9483C31126BCA8DC00B85B63 /* Mocker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,7 +223,6 @@
 			name = HarryPotterProducts;
 			packageProductDependencies = (
 				412C081126B9FF3A00037FBF /* SnapKit */,
-				4179662226BA652F0024D364 /* Mocker */,
 			);
 			productName = HarryPotterProducts;
 			productReference = 412C07E726B9FA2F00037FBF /* HarryPotterProducts.app */;
@@ -243,6 +242,9 @@
 				412C07FF26B9FA3000037FBF /* PBXTargetDependency */,
 			);
 			name = HarryPotterProductsTests;
+			packageProductDependencies = (
+				9483C31026BCA8DC00B85B63 /* Mocker */,
+			);
 			productName = HarryPotterProductsTests;
 			productReference = 412C07FD26B9FA3000037FBF /* HarryPotterProductsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -254,7 +256,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Greg Baker";
 				TargetAttributes = {
 					412C07E626B9FA2F00037FBF = {
@@ -277,7 +279,7 @@
 			mainGroup = 412C07DE26B9FA2F00037FBF;
 			packageReferences = (
 				412C081026B9FF3A00037FBF /* XCRemoteSwiftPackageReference "SnapKit" */,
-				4179662126BA652F0024D364 /* XCRemoteSwiftPackageReference "Mocker" */,
+				9483C30F26BCA8DC00B85B63 /* XCRemoteSwiftPackageReference "Mocker" */,
 			);
 			productRefGroup = 412C07E826B9FA2F00037FBF /* Products */;
 			projectDirPath = "";
@@ -394,6 +396,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -454,6 +457,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -487,6 +491,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MQRDZA663E;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = HarryPotterProducts/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -505,6 +510,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MQRDZA663E;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = HarryPotterProducts/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -601,7 +607,7 @@
 				minimumVersion = 5.0.1;
 			};
 		};
-		4179662126BA652F0024D364 /* XCRemoteSwiftPackageReference "Mocker" */ = {
+		9483C30F26BCA8DC00B85B63 /* XCRemoteSwiftPackageReference "Mocker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WeTransfer/Mocker";
 			requirement = {
@@ -617,9 +623,9 @@
 			package = 412C081026B9FF3A00037FBF /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		4179662226BA652F0024D364 /* Mocker */ = {
+		9483C31026BCA8DC00B85B63 /* Mocker */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4179662126BA652F0024D364 /* XCRemoteSwiftPackageReference "Mocker" */;
+			package = 9483C30F26BCA8DC00B85B63 /* XCRemoteSwiftPackageReference "Mocker" */;
 			productName = Mocker;
 		};
 /* End XCSwiftPackageProductDependency section */
