@@ -36,8 +36,12 @@ final class ProductCellView: UICollectionViewCell {
         UIImage(systemName: "star")
     }()
 
-    private lazy var favoriteImageView: UIImageView = {
-        UIImageView(image: nonfavoriteImage)
+    private lazy var favoriteButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.addTarget(self,
+                         action: #selector(tappedFavorite(_:)),
+                         for: .touchUpInside)
+        return button
     }()
 
     private lazy var titleLabel: UILabel = {
@@ -110,8 +114,8 @@ final class ProductCellView: UICollectionViewCell {
             make.left.right.equalTo(titleLabel)
         }
 
-        addSubview(favoriteImageView)
-        favoriteImageView.snp.makeConstraints { make in
+        addSubview(favoriteButton)
+        favoriteButton.snp.makeConstraints { make in
             make.top.equalTo(authorLabel.snp.bottom)
                         .offset(spacing)
             make.left.equalTo(authorLabel)
@@ -119,7 +123,7 @@ final class ProductCellView: UICollectionViewCell {
 
         addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.top.equalTo(favoriteImageView.snp.bottom)
+            make.top.equalTo(favoriteButton.snp.bottom)
                     .offset(spacing)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -134,7 +138,7 @@ final class ProductCellView: UICollectionViewCell {
         favoritePublisher = viewModel.productFavoritePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.configureFavoriteImage()
+                self?.configureFavoriteButton()
             }
 
         titleLabel.text = viewModel.product.title
@@ -153,12 +157,12 @@ final class ProductCellView: UICollectionViewCell {
         invalidateIntrinsicContentSize()
     }
 
-    private func configureFavoriteImage() {
+    private func configureFavoriteButton() {
         if viewModel?.productIsFavorite ?? false {
-            favoriteImageView.image = favoriteImage
+            favoriteButton.setImage(favoriteImage, for: .normal)
         }
         else {
-            favoriteImageView.image = nonfavoriteImage
+            favoriteButton.setImage(nonfavoriteImage, for: .normal)
         }
     }
 
@@ -197,5 +201,13 @@ final class ProductCellView: UICollectionViewCell {
             make.width.lessThanOrEqualTo(imageWidth)
             make.height.lessThanOrEqualTo(imageHeight)
         }
+    }
+
+    // MARK: - Favorite button handler
+
+    @objc
+    private func tappedFavorite(_ sender: Any) {
+        viewModel?.toggleProductAsFavorite()
+        configureFavoriteButton()
     }
 }

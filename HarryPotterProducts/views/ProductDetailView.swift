@@ -112,16 +112,16 @@ final class ProductDetailView: UIView {
     }
 
     private func configure(usingProduct product: Product) {
-        titleLabel.text = viewModel.product.title
+        titleLabel.text = product.title
 
-        if let productAuthor = viewModel.product.author {
+        if let productAuthor = product.author {
             authorLabel.text = "Author: \(productAuthor)"
         }
         else {
             authorLabel.text = "Author: N/A"
         }
 
-        if let productImage = viewModel.product.image {
+        if let productImage = product.image {
             imageView.image = productImage
         }
         else {
