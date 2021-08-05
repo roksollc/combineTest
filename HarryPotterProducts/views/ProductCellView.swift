@@ -15,23 +15,18 @@ final class ProductCellView: UICollectionViewCell {
     private var imagePublisher: AnyCancellable?
     private var favoritePublisher: AnyCancellable?
 
+    private let spacing: CGFloat = 8
     private let cornerRadius: CGFloat = 5
-    private let inset: CGFloat = 8
     private let fontName = "AvenirNext-DemiBold"
     private let fontSize: CGFloat = 12
     private let textColor = UIColor(named: "textColor")
 
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
-        stackView.alignment = .leading
-        stackView.spacing = 5
-        return stackView
-    }()
-
     private lazy var preferredLabelMaxLayoutWidth: CGFloat = {
         UIScreen.main.bounds.width / 3
+    }()
+
+    private lazy var maxImageWidth: CGFloat = {
+        titleLabel.intrinsicContentSize.width * 0.8
     }()
 
     private lazy var favoriteImage: UIImage? = {
@@ -89,7 +84,6 @@ final class ProductCellView: UICollectionViewCell {
 
         imagePublisher?.cancel()
         favoritePublisher?.cancel()
-        clearStackView()
 
         titleLabel.text = nil
         authorLabel.text = nil
@@ -101,29 +95,41 @@ final class ProductCellView: UICollectionViewCell {
         backgroundColor = .lightGray
         layer.cornerRadius = cornerRadius
 
-        contentView.addSubview(stackView)
+        addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.left
+                .right
+                .top.equalToSuperview()
+                        .inset(spacing)
+        }
 
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-                        .inset(inset)
+        addSubview(authorLabel)
+        authorLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom)
+                .offset(spacing)
+            make.left.right.equalTo(titleLabel)
+        }
+
+        addSubview(favoriteImageView)
+        favoriteImageView.snp.makeConstraints { make in
+            make.top.equalTo(authorLabel.snp.bottom)
+                        .offset(spacing)
+            make.left.equalTo(authorLabel)
+        }
+
+        addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.top.equalTo(favoriteImageView.snp.bottom)
+                    .offset(spacing)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview()
+                    .inset(spacing)
         }
     }
 
     func configure(usingViewModel viewModel: ProductInfo) {
         self.viewModel = viewModel
 
-        // title on top
-        titleLabel.text = viewModel.product.title
-        stackView.addArrangedSubview(titleLabel)
-
-        // then author if present
-        if let productAuthor = viewModel.product.author {
-            authorLabel.text = "Author: \(productAuthor)"
-            stackView.addArrangedSubview(authorLabel)
-        }
-
-        // then favorite/non-favorite image
-        stackView.addArrangedSubview(favoriteImageView)
         // watch for changes to the published favorite
         favoritePublisher = viewModel.productFavoritePublisher
             .receive(on: DispatchQueue.main)
@@ -131,10 +137,10 @@ final class ProductCellView: UICollectionViewCell {
                 self?.configureFavoriteImage()
             }
 
-        // then image if present
-        if viewModel.productHasImage {
-            stackView.addArrangedSubview(imageView)
+        titleLabel.text = viewModel.product.title
+        authorLabel.text = viewModel.product.author
 
+        if viewModel.productHasImage {
             if let productImage = viewModel.product.image {
                 imageView.image = productImage
                 constrainProductImage()
@@ -144,12 +150,7 @@ final class ProductCellView: UICollectionViewCell {
             }
         }
 
-        stackView.sizeToFit()
         invalidateIntrinsicContentSize()
-        // TODO: This does not yield a redraw in the collection view
-        // Tried a notification to the collection view
-        // but it forced it to upset the scroll position and lagged it eventually
-        // -> Check constraints.
     }
 
     private func configureFavoriteImage() {
@@ -182,12 +183,6 @@ final class ProductCellView: UICollectionViewCell {
         viewModel.fetchProductImage()
     }
 
-    private func clearStackView() {
-        for arrangedSubview in stackView.arrangedSubviews {
-            arrangedSubview.removeFromSuperview()
-        }
-    }
-
     // MARK: Image view constraints
 
     private func constrainProductImage() {
@@ -196,8 +191,7 @@ final class ProductCellView: UICollectionViewCell {
             else { return }
 
         let aspectRatio = imageSize.height / imageSize.width
-        let imageWidth = min(self.preferredLabelMaxLayoutWidth,
-                             imageSize.width)
+        let imageWidth = min(maxImageWidth, imageSize.width)
         let imageHeight = imageWidth * aspectRatio
         self.imageView.snp.makeConstraints { make in
             make.width.lessThanOrEqualTo(imageWidth)
